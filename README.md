@@ -1,0 +1,1 @@
+This is where I teach myself Smalltalk packages using the Glamorous Toolkit system.
