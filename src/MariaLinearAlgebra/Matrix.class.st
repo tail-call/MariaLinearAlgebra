@@ -31,20 +31,12 @@ Matrix class >> rows: r columns: c [
 
 { #category : 'as yet unclassified' }
 Matrix >> + aMatrix [
-	| newMatrix |
-	self assert: width equals: aMatrix width.
-	self assert: height equals: aMatrix height.
-	newMatrix := Matrix rows: height columns: width.
-	1 to: height do: [ :i |
-		1 to: width do: [ :j |
-			newMatrix atRow: i column: j put: (
-				(self atRow: i column: j)
-				+
-				(aMatrix atRow: i column: j) 
-			)
-		].
-	].
-	^ newMatrix
+	^ self collectElementWise: [ :a :b | a + b ] against: aMatrix
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> - aMatrix [
+	^ self collectElementWise: [ :a :b | a - b ] against: aMatrix
 ]
 
 { #category : 'accessing' }
@@ -69,6 +61,28 @@ Matrix >> collect: block [
 			put: value.
 	].
 	^ newMatrix.
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> collect: block against: aMatrix [
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> collectElementWise: block against: aMatrix [
+	| newMatrix |
+	self assert: width equals: aMatrix width.
+	self assert: height equals: aMatrix height.
+	newMatrix := Matrix rows: height columns: width.
+	1 to: height do: [ :i |
+		1 to: width do: [ :j |
+			newMatrix atRow: i column: j put: (
+				block
+					value: (self atRow: i column: j)
+					value: (aMatrix atRow: i column: j)
+			)
+		].
+	].
+	^ newMatrix
 ]
 
 { #category : 'as yet unclassified' }
