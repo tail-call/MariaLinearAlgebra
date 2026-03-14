@@ -195,6 +195,11 @@ Matrix >> rows [
 ]
 
 { #category : 'as yet unclassified' }
+Matrix >> swapRows: i and: j [ 
+	accessor swapRows: i and: j.
+]
+
+{ #category : 'as yet unclassified' }
 Matrix >> width [
 	^ width
 ]
