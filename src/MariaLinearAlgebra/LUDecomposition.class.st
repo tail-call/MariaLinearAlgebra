@@ -1,0 +1,120 @@
+Class {
+	#name : 'LUDecomposition',
+	#superclass : 'Object',
+	#instVars : [
+		'lmepu',
+		'permutation'
+	],
+	#category : 'MariaLinearAlgebra',
+	#package : 'MariaLinearAlgebra'
+}
+
+{ #category : 'as yet unclassified' }
+LUDecomposition class >> decompose: aMatrix [
+	"Matrix A is changed, it contains a copy of both matrices L-E and U as A=(L-E)+U such that P*A=L*U."
+	
+		"The permutation matrix is not stored as a matrix, but in an integer vector P of size N+1  containing column indexes where the permutation matrix has '1'. The last element P[N]=S+N, where S is the number of row exchanges needed for determinant computation, det(P)=(-1)^S"
+			 
+	| lmepu n tol p |
+	lmepu := aMatrix materialize.
+	n := lmepu width.
+	
+	tol := 0.01.
+	
+	p := (1 to: n + 1) collect: [ :i | i ].
+	
+	1 to: n do: [ :i |
+		| maxA imax |
+		maxA := 0.0.
+		imax := i.
+		
+		i to: n do: [ :k |
+			| absA |
+			absA := (lmepu atRow: k column: i) abs.
+			(absA > maxA) ifTrue: [
+				maxA := absA.
+				imax := k.
+			]
+		].
+		
+		(maxA < tol) ifTrue: [
+			self error: 'matrix is degenerate'
+		].
+		
+		(imax ~= i) ifTrue: [
+			| j |
+			"pivoting P"
+			j := p at: i.
+			p at: i put: (p at: imax).
+			p at: imax put: j.
+			
+			"pivoting rows of A"
+			lmepu swapRows: i and: imax.
+			
+			"counting pivots starting from N (for determinant)"
+			p at: n + 1 put: ((p at: n + 1) + 1).
+		].
+	
+		(i + 1) to: n do: [ :j |
+			lmepu atRow: j column: i put: (
+				(lmepu atRow: j column: i) / (lmepu atRow: i column: i)
+			).
+			
+			(i + 1) to: n do: [ :k |
+				lmepu atRow: j column: k put: (
+					(lmepu atRow: j column: k) - (
+						(lmepu atRow: j column: i)
+						*
+						(lmepu atRow: i column: k)
+					)
+				).
+			].
+		].
+	].
+	
+	^ self new setLmepu: lmepu permutation: p.
+]
+
+{ #category : 'as yet unclassified' }
+LUDecomposition >> lower [
+	| matrix size |
+	size := lmepu height.
+	matrix := Matrix rows: size columns: size.
+	2 to: size do: [ :i |
+		1 to: i - 1 do: [ :j |
+			matrix atRow: i column: j put: (lmepu atRow: i column: j)
+		].
+	].
+	^ matrix
+]
+
+{ #category : 'as yet unclassified' }
+LUDecomposition >> permutationMatrix [
+	| matrix size |
+	size := lmepu height.
+	matrix := Matrix rows: size columns: size.
+	1 to: size do: [ :i |
+		matrix atRow: i column: (permutation at: i) put: 1
+	].
+	^ matrix
+]
+
+{ #category : 'as yet unclassified' }
+LUDecomposition >> setLmepu: newLmepu permutation: newPermutation [
+	lmepu := newLmepu.
+	permutation := newPermutation.
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
+LUDecomposition >> upper [
+	| matrix size |
+	size := lmepu height.
+	matrix := Matrix rows: size columns: size.
+	1 to: size do: [ :i |
+		i to: size do: [ :j |
+			matrix atRow: i column: j put: (lmepu atRow: i column: j)
+		].
+	].
+	^ matrix.
+]
