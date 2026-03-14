@@ -21,7 +21,7 @@ Matrix class >> eye: size [
 	^ matrix
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 Matrix class >> fromArrays: rowsArray [
 	| height width newMatrix |
 	self assert: rowsArray isNotEmpty.
@@ -53,7 +53,7 @@ Matrix class >> rows: r columns: c [
 	^ matrix.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'operators' }
 Matrix >> * aMatrix [ 
 	| newMatrix newWidth newHeight |
 
@@ -85,12 +85,12 @@ Matrix >> * aMatrix [
 	^ newMatrix
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'operators' }
 Matrix >> + aMatrix [
 	^ self collectElementWise: [ :a :b | a + b ] against: aMatrix
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'operators' }
 Matrix >> - aMatrix [
 	^ self collectElementWise: [ :a :b | a - b ] against: aMatrix
 ]
@@ -123,7 +123,7 @@ Matrix >> collect: block [
 Matrix >> collect: block against: aMatrix [
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mapping' }
 Matrix >> collectElementWise: block against: aMatrix [
 	| newMatrix |
 	self assert: width equals: aMatrix width.
@@ -164,9 +164,20 @@ Matrix >> gtItemsFor: aView [
 	^ list
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Matrix >> height [
 	^ height
+]
+
+{ #category : 'copying' }
+Matrix >> materialize [
+	"Recreates a copy of matrix with different storage. Used to decouple values of matrix if its contents are to be shared."
+	| newMatrix |
+	newMatrix := Matrix rows: height columns: width.
+	self withIndexDo: [ :each :i :j |
+		newMatrix atRow: i column: j put: each
+	].
+	^ newMatrix
 ]
 
 { #category : 'initialization' }
@@ -182,7 +193,7 @@ Matrix >> recreateWithRows: r columns: c [
 	^ self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Matrix >> rows [
 	| rowItems |
 	^ (1 to: height) collect: [ :i |
@@ -194,12 +205,17 @@ Matrix >> rows [
 	]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
+Matrix >> swapRows: i and: j [ 
+	accessor swapRows: i and: j.
+]
+
+{ #category : 'accessing' }
 Matrix >> width [
 	^ width
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'iterating' }
 Matrix >> withIndexDo: elementAndIndicesBlock [
 	| each |
 	1 to: height do: [ :i |
