@@ -21,6 +21,30 @@ Matrix class >> eye: size [
 	^ matrix
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix class >> fromArrays: rowsArray [
+	| height width newMatrix |
+	self assert: rowsArray isNotEmpty.
+	
+	height := rowsArray size.
+	width := rowsArray first size.
+	newMatrix := self rows: height columns: width.
+	
+	1 to: height do: [ :i |
+		| row |
+		row := rowsArray at: i.
+		
+		"All rows must be of same width."
+		self assert: row size = width.
+		
+		1 to: width do: [ :j |
+			newMatrix atRow: i column: j put: (row at: j)
+		].
+	].
+	
+	^ newMatrix
+]
+
 { #category : 'initialization' }
 Matrix class >> rows: r columns: c [
 	| matrix |
