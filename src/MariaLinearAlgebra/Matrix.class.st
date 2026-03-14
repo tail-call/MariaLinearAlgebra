@@ -21,12 +21,68 @@ Matrix class >> eye: size [
 	^ matrix
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix class >> fromArrays: rowsArray [
+	| height width newMatrix |
+	self assert: rowsArray isNotEmpty.
+	
+	height := rowsArray size.
+	width := rowsArray first size.
+	newMatrix := self rows: height columns: width.
+	
+	1 to: height do: [ :i |
+		| row |
+		row := rowsArray at: i.
+		
+		"All rows must be of same width."
+		self assert: row size = width.
+		
+		1 to: width do: [ :j |
+			newMatrix atRow: i column: j put: (row at: j)
+		].
+	].
+	
+	^ newMatrix
+]
+
 { #category : 'initialization' }
 Matrix class >> rows: r columns: c [
 	| matrix |
 	matrix := self new.
 	matrix recreateWithRows: r columns: c.
 	^ matrix.
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> * aMatrix [ 
+	| newMatrix newWidth newHeight |
+
+	self assert: width equals: aMatrix height.
+	
+	newWidth := aMatrix width.
+	newHeight := height.
+	newMatrix := Matrix
+		rows: newHeight
+		columns: newWidth.
+
+	1 to: newHeight do: [ :newI |
+		1 to: newWidth do: [ :newJ |
+			| cellValue |
+			cellValue := 0.
+			
+			"Compute cell value as a linear combination"
+			1 to: width do: [ :j |
+				cellValue := cellValue + ((
+					self atRow: newI column: j
+				) * (
+					aMatrix atRow: j column: newJ
+				)).
+			].
+			
+			newMatrix atRow: newI column: newJ put: cellValue.
+		].
+	].
+	^ newMatrix
 ]
 
 { #category : 'as yet unclassified' }
