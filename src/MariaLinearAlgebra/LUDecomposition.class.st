@@ -98,6 +98,43 @@ LUDecomposition >> determinant [
 ]
 
 { #category : 'as yet unclassified' }
+LUDecomposition >> inverse [
+	"Computes the inverse of the original matrix, the one that is A = LUP^{-1}."
+	"fles is inverted self, get it?"
+	| fles size |
+	size := lmepu width.
+	fles := Matrix rows: size columns: size.
+
+	1 to: size do: [ :j |
+		1 to: size do: [ :i |
+			(permutation at: i) = j ifTrue: [
+				fles atRow: i column: j put: 1.0
+			] ifFalse: [
+				fles atRow: i column: j put: 0.0
+			].
+			
+			1 to: i - 1 do: [ :k |
+				fles atRow: i column: j decreaseBy: (
+					(lmepu atRow: i column: k) * (fles atRow: k column: j)
+				).
+			].
+		].
+
+		size to: 1 by: -1 do: [ :i |
+			(i + 1) to: size do: [ :k |
+				fles atRow: i column: j decreaseBy: (
+					(lmepu atRow: i column: k) * (fles atRow: k column: j)
+				).
+				
+			].
+			
+			fles atRow: i column: j divideBy: (lmepu atRow: i column: i).
+		].
+	].
+	^ fles
+]
+
+{ #category : 'as yet unclassified' }
 LUDecomposition >> lower [
 	| matrix size |
 	size := lmepu height.

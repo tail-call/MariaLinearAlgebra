@@ -101,9 +101,33 @@ Matrix >> atRow: i column: j [
 	^ accessor atRow: i column: j
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix >> atRow: i column: j decreaseBy: dx [
+	self atRow: i column: j updateBy: [ :x |
+		x - dx
+	].
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> atRow: i column: j divideBy: factor [
+	self atRow: i column: j updateBy: [ :x |
+		x / factor
+	].
+]
+
 { #category : 'updating' }
 Matrix >> atRow: i column: j put: float [
 	accessor atRow: i column: j put: float.
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> atRow: i column: j updateBy: block [
+	| currentValue |
+	currentValue := self atRow: i column: j.
+	self atRow: i column: j put: (
+		block value: currentValue
+	).
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -188,6 +212,11 @@ Matrix >> gtItemsFor: aView [
 { #category : 'accessing' }
 Matrix >> height [
 	^ height
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> inverse [
+	^ (LUDecomposition decompose: self) inverse.
 ]
 
 { #category : 'copying' }
