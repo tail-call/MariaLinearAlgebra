@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'lmepu',
-		'permutation'
+		'permutation',
+		'swaps'
 	],
 	#category : 'MariaLinearAlgebra',
 	#package : 'MariaLinearAlgebra'
@@ -14,17 +15,20 @@ Class {
 
 { #category : 'as yet unclassified' }
 LUDecomposition class >> decompose: aMatrix [
-	"Matrix A is changed, it contains a copy of both matrices L-E and U as A=(L-E)+U such that P*A=L*U."
+	"lmepu contains a copy of both matrices L-E and U as A=(L-E)+U such that P*A=L*U."
 	
-		"The permutation matrix is not stored as a matrix, but in an integer vector P of size N+1  containing column indexes where the permutation matrix has '1'. The last element P[N]=S+N, where S is the number of row exchanges needed for determinant computation, det(P)=(-1)^S"
+	"The permutation matrix is not stored as a matrix, but in an integer vector P of size N  containing column indexes where the permutation matrix has 1."
+	
+	"The `swaps` variable (S) is the number of row exchanges needed for determinant computation, det(P)=(-1)^S"
 			 
-	| lmepu n tol p |
+	| lmepu n tol p swaps |
 	lmepu := aMatrix materialize.
 	n := lmepu width.
 	
 	tol := 0.01.
 	
-	p := (1 to: n + 1) collect: [ :i | i ].
+	p := (1 to: n) collect: [ :i | i ].
+	swaps := 0.
 	
 	1 to: n do: [ :i |
 		| maxA imax |
@@ -54,8 +58,8 @@ LUDecomposition class >> decompose: aMatrix [
 			"pivoting rows of A"
 			lmepu swapRows: i and: imax.
 			
-			"counting pivots starting from N (for determinant)"
-			p at: n + 1 put: ((p at: n + 1) + 1).
+			"counting pivots for determinant"
+			swaps := swaps + 1.
 		].
 	
 		(i + 1) to: n do: [ :j |
@@ -75,12 +79,12 @@ LUDecomposition class >> decompose: aMatrix [
 		].
 	].
 	
-	^ self new setLmepu: lmepu permutation: p.
+	^ self new setLmepu: lmepu permutation: p swaps: swaps.
 ]
 
 { #category : 'as yet unclassified' }
 LUDecomposition >> determinant [
-	| det sign|
+	| det sign |
 	"Computes the determinant of the matrix that was LU decomposed"
 	
 	det := lmepu atRow: 1 column: 1.
@@ -89,10 +93,7 @@ LUDecomposition >> determinant [
 		det := det * (lmepu atRow: i column: i).
 	].
 	
-	sign := (
-		(permutation at: (lmepu width + 1))
-		- lmepu width - 1
-	) % 2.
+	sign := swaps % 2.
 	^ sign = 0 ifTrue: [ det ] ifFalse: [ det negated ].
 ]
 
@@ -124,6 +125,14 @@ LUDecomposition >> permutationMatrix [
 LUDecomposition >> setLmepu: newLmepu permutation: newPermutation [
 	lmepu := newLmepu.
 	permutation := newPermutation.
+	^ self
+]
+
+{ #category : 'as yet unclassified' }
+LUDecomposition >> setLmepu: newLmepu permutation: newPermutation swaps: newSwaps [
+	lmepu := newLmepu.
+	permutation := newPermutation.
+	swaps := newSwaps.
 	^ self
 ]
 
