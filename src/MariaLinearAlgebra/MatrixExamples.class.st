@@ -72,6 +72,28 @@ MatrixExamples >> eyeExample [
 ]
 
 { #category : 'as yet unclassified' }
+MatrixExamples >> inverseExample [
+	<gtExample>
+	| a ia |
+	a := Matrix
+		fromArrays:
+			#(#( 4  7  8 13)
+			  #( 2 11 12  9)
+			  #(10  5  6 14)
+			  #(15 16 17 18)).
+
+	ia := a inverse.
+
+	"Inverse of inverse is the same matrix"
+	(ia inverse - a)
+		withIndexDo: [ :each :i :j |
+			self assert: each abs < 1e-5.
+		].
+	
+	^ ia
+]
+
+{ #category : 'as yet unclassified' }
 MatrixExamples >> multiplicationExample [
 	<gtExample>
 	| a b expected result |
