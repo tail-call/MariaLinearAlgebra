@@ -1,3 +1,6 @@
+"
+I am a LU-decomposition of a matrix. Largely taken from here: https://en.wikipedia.org/wiki/LU_decomposition#C_code_example
+"
 Class {
 	#name : 'LUDecomposition',
 	#superclass : 'Object',
@@ -76,6 +79,24 @@ LUDecomposition class >> decompose: aMatrix [
 ]
 
 { #category : 'as yet unclassified' }
+LUDecomposition >> determinant [
+	| det sign|
+	"Computes the determinant of the matrix that was LU decomposed"
+	
+	det := lmepu atRow: 1 column: 1.
+	
+	2 to: lmepu width do: [ :i |
+		det := det * (lmepu atRow: i column: i).
+	].
+	
+	sign := (
+		(permutation at: (lmepu width + 1))
+		- lmepu width - 1
+	) % 2.
+	^ sign = 0 ifTrue: [ det ] ifFalse: [ det negated ].
+]
+
+{ #category : 'as yet unclassified' }
 LUDecomposition >> lower [
 	| matrix size |
 	size := lmepu height.
@@ -85,7 +106,7 @@ LUDecomposition >> lower [
 			matrix atRow: i column: j put: (lmepu atRow: i column: j)
 		].
 	].
-	^ matrix
+	^ matrix + (Matrix eye: size)
 ]
 
 { #category : 'as yet unclassified' }
