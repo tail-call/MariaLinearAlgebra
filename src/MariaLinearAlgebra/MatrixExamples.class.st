@@ -28,6 +28,21 @@ MatrixExamples >> additionExample [
 ]
 
 { #category : 'as yet unclassified' }
+MatrixExamples >> determinantExample [
+	<gtExample>
+	| det error |
+	det := (Matrix
+		fromArrays:
+			#(#(-2  3 -1)
+			  #( 5 -1  4)
+			  #( 4 -8  2))
+	) determinant.
+	error := (-6) - det.
+	self assert: error < 1e-6.
+	^ det
+]
+
+{ #category : 'as yet unclassified' }
 MatrixExamples >> eyeExample [
 	<gtExample>
 	| eyeMatrix |
