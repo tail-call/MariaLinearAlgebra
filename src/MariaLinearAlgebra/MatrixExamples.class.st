@@ -30,16 +30,28 @@ MatrixExamples >> additionExample [
 { #category : 'as yet unclassified' }
 MatrixExamples >> determinantExample [
 	<gtExample>
-	| det error |
-	det := (Matrix
-		fromArrays:
-			#(#(-2  3 -1)
-			  #( 5 -1  4)
-			  #( 4 -8  2))
-	) determinant.
-	error := (-6) - det.
-	self assert: error < 1e-6.
-	^ det
+	| cases |
+	
+	cases := Dictionary new.
+	cases
+		at: #(#(-2  3 -1)
+		      #( 5 -1  4)
+		      #( 4 -8  2))
+		put: -6 ;
+		at: #(#(4 1)
+		      #(2 3))
+		put: 10 .
+	
+	cases keysAndValuesDo: [ :arrays :expected |
+		| det error matrix |
+		matrix := Matrix fromArrays: arrays.
+		det := matrix determinant.
+		error := det - expected.
+		self assert: error abs < 1e-6.
+		cases at: arrays put: det.
+	].
+	
+	^ cases
 ]
 
 { #category : 'as yet unclassified' }
