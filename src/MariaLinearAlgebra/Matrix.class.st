@@ -142,6 +142,21 @@ Matrix >> collectElementWise: block against: aMatrix [
 ]
 
 { #category : 'as yet unclassified' }
+Matrix >> equals: aMatrix [
+	self withIndexDo: [ :each :i :j |
+		(
+			self atRow: i column: j
+		) = (
+			aMatrix atRow: i column: j
+		) ifFalse: [
+			^ false
+		]
+	].
+	^ true
+	
+]
+
+{ #category : 'as yet unclassified' }
 Matrix >> gtItemsFor: aView [
 	<gtView>
 	| list |

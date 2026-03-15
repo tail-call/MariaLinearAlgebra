@@ -43,3 +43,33 @@ MatrixExamples >> eyeExample [
 
 	^ eyeMatrix
 ]
+
+{ #category : 'as yet unclassified' }
+MatrixExamples >> multiplicationExample [
+	<gtExample>
+	| a b expected result |
+
+	a := Matrix
+		fromArrays:
+			#(#(6 4)
+			  #(0 7)
+			  #(5 1)).
+
+	b := Matrix
+		fromArrays:
+			#(#(6 4 8)
+			  #(2 7 9)).
+
+	expected := Matrix
+		fromArrays:
+			#(#(44 52 84)
+			  #(14 49 63)
+			  #(32 27 49)).
+
+	result := a * b.
+
+	self assert: (result equals: expected).
+	
+	^ result
+
+]
