@@ -87,6 +87,22 @@ Lens2D >> swapRows: row1 and: row2 [
 ]
 
 { #category : 'as yet unclassified' }
+Lens2D >> transpose [
+	| oldReadBlock oldWriteBlock |
+	oldReadBlock := readBlock.
+	oldWriteBlock := writeBlock.
+	self
+		setRowsRange: columnsRange
+		columnsRange: rowsRange
+		readBlock: [ :i :j |
+			oldReadBlock value: j value: i
+		]
+		writeBlock: [ :i :j :x |
+			oldWriteBlock value: j value: i value: x
+		].
+]
+
+{ #category : 'as yet unclassified' }
 Lens2D >> validateRow: i column: j [
 	i > (rowsRange stop) ifTrue: [
 		self error: 'i is too big'

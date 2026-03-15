@@ -122,3 +122,22 @@ MatrixExamples >> multiplicationExample [
 	^ result
 
 ]
+
+{ #category : 'as yet unclassified' }
+MatrixExamples >> transposeExample [
+	<gtExample>
+	| a at |
+	a := Matrix
+		fromArrays:
+			#(#(6 4)
+			  #(0 7)
+			  #(5 1)).
+
+	at := Matrix
+		fromArrays:
+			#(#(6 0 5)
+				#(4 7 1)).
+	
+	self assert: (at equals: a transposed).
+	^ a transposed.
+]

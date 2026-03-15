@@ -260,6 +260,23 @@ Matrix >> swapRows: i and: j [
 	accessor swapRows: i and: j.
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix >> transpose [
+	| tmp |
+	accessor transpose.
+	tmp := width.
+	width := height.
+	height := tmp.
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> transposed [
+	| newMatrix |
+	newMatrix := self materialize.
+	newMatrix transpose.
+	^ newMatrix
+]
+
 { #category : 'accessing' }
 Matrix >> width [
 	^ width
