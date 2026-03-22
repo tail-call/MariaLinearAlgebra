@@ -174,6 +174,47 @@ LUDecomposition >> setLmepu: newLmepu permutation: newPermutation swaps: newSwap
 ]
 
 { #category : 'as yet unclassified' }
+LUDecomposition >> solveFor: rhsVector [
+	| N solution solblk |
+	N := lmepu width.
+	solution := Array new: N.
+	solblk := [ :i :k |
+		solution at: i put: (
+			(solution at: i)
+			-
+			(
+				(lmepu atRow: i column: k)
+				*
+				(solution at: k)
+			)
+		).
+	].
+	
+	1 to: N do: [ :i |
+		solution at: i put: (
+			rhsVector at: (permutation at: i)
+		).
+		
+		1 to: (i - 1) do: [ :k |
+			solblk value: i value: k.
+		].
+	].
+	
+	N to: 1 by: -1 do: [ :i |
+		(i + 1) to: N do: [ :k |
+			solblk value: i value: k.
+		].
+		solution at: i put: (
+			(solution at: i)
+			/
+			(lmepu atRow: i column: i)
+		).
+	].
+	^ solution
+	
+]
+
+{ #category : 'as yet unclassified' }
 LUDecomposition >> upper [
 	| matrix size |
 	size := lmepu height.
