@@ -10,6 +10,17 @@ Class {
 	#package : 'MariaLinearAlgebra'
 }
 
+{ #category : 'as yet unclassified' }
+Matrix class >> columnVector: items [
+	| height matrix |
+	height := items size.
+	matrix := self rows: height columns: 1.
+	items withIndexDo: [ :each :i |
+		matrix atRow: i column: 1 put: each
+	].
+	^ matrix
+]
+
 { #category : 'initialization' }
 Matrix class >> eye: size [
 	"Creates a unit matrix, that is, a square matrix that has ones on the main diagonal and zeroes everywhere else. Multiplying any matrix M by a unit matrix gives you a matrix that is equal to M, so a unit matrix acts like a 1 in multiplication. As for the name of the method (eye:), it's been lifted from NumPy library where it does the same thing. But why 'eye'? Likely because the standard notations for unit matrices (E or I), respectively, 1) resemble the first letter of Eye; 2) read the same as 'eye' (conf. eye and I). Or because a unit matrix resembles a snake eye."
