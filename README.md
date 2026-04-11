@@ -1,3 +1,5 @@
+<img width="1484" height="846" alt="A screenshot of a plot of normal distribution" src="https://github.com/user-attachments/assets/aae4f6a0-3e7c-4fe3-b630-8ff72ff34e60" />
+
 This package is where I teach myself:
 - Smalltalk packages using the Glamorous Toolkit system
 - Linear algebra and statistics (so the name of the package is misleading but we'll fix that *eventually*)
