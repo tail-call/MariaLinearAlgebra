@@ -1,8 +1,13 @@
-This package is where I teach myself Smalltalk packages using the Glamorous Toolkit system.
+This package is where I teach myself:
+- Smalltalk packages using the Glamorous Toolkit system
+- Linear algebra and statistics (so the name of the package is misleading but we'll fix that *eventually*)
 
-It implements a Matrix class, a Lens2D internal storage for matrices for
+The package implements a Matrix class, a Lens2D internal storage for matrices for
 fast row swaps/transpositions, and a LUDecomposition class for computing
 the determinant and inverses, and for solving systems of linear equations.
+
+It also has a `NormaDistribution` class with the ability to query the probability
+density function as well as sample from the distribution using the Box-Muller transform.
 
 To load this package:
 1. Download a Glamorous Toolkit release from here: https://github.com/feenkcom/gtoolkit/releases
