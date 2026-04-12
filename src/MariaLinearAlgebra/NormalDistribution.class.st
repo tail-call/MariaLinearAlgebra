@@ -21,6 +21,13 @@ NormalDistribution >> initialize [
 ]
 
 { #category : 'as yet unclassified' }
+NormalDistribution >> logLikelihood: anArray [
+	^ anArray inject: 0 into: [ :total :each |
+		total + (self probabilityDensity: each) ln
+	]
+]
+
+{ #category : 'as yet unclassified' }
 NormalDistribution >> mean: m standardDeviation: d [
 	mean := m.
 	standardDeviation := d.
