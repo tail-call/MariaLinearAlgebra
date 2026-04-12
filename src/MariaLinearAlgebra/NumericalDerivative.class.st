@@ -18,6 +18,11 @@ NumericalDerivative class >> ofBlock: aBlock [
 ]
 
 { #category : 'as yet unclassified' }
+NumericalDerivative >> derivated [
+	^ NumericalDerivative ofBlock: self.
+]
+
+{ #category : 'as yet unclassified' }
 NumericalDerivative >> initialize [
 	step := 1e-8.
 ]
