@@ -1,12 +1,12 @@
 Class {
-	#name : 'LUDecompositionExamples',
+	#name : 'MlaExamples',
 	#superclass : 'Object',
 	#category : 'MariaLinearAlgebra',
 	#package : 'MariaLinearAlgebra'
 }
 
 { #category : 'as yet unclassified' }
-LUDecompositionExamples >> decompositionExample [
+MlaExamples >> decompositionExample [
 	<gtExample>
 	| a decomp zeroes |
 	a := Matrix
@@ -29,7 +29,40 @@ LUDecompositionExamples >> decompositionExample [
 ]
 
 { #category : 'as yet unclassified' }
-LUDecompositionExamples >> solveLinearSystemExample [
+MlaExamples >> normalDistributionExample [
+	<gtExample>
+	"XXX: This better be a live view of normal distribution"
+	| nd values data lineChart |
+	nd := NormalDistribution withMean: 0 standardDeviation: 1.
+	values := (-300 to: 300) collect: [ :i |
+		| x |
+		x := (i / 100).
+		x -> (nd probabilityDensity: x).
+	].
+	
+	"I know you shouldn't test floats for strict
+	 equality, but I'm so curious"
+	self assert: (nd probabilityDensity: 0)
+	     equals: 0.3989422804014327.
+	self assert: (nd probabilityDensity: 1)
+	     equals: 0.24197072451914337.
+	
+	data := GtPlotterDataGroup new
+		values: values;
+		background: Color purple.
+
+	lineChart := GtPlotterLineChart new
+		with: data;
+		labelFormatX: #asString; "if we don't do this, things go awry"
+		labelFormatY: #asString;
+		valueX: #key;
+		valueY: #value.
+	
+	^ nd -> lineChart
+]
+
+{ #category : 'as yet unclassified' }
+MlaExamples >> solveLinearSystemExample [
 	<gtExample>
 	| cases |
 	cases := Dictionary new.
