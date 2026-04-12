@@ -1,3 +1,6 @@
+"
+I am a method for finding points where the value of a function is zero. The function could be any object that implements the `value:` method that accepts a number and returns a number. Internally I work with floating point values.
+"
 Class {
 	#name : 'SecantMethod',
 	#superclass : 'Object',

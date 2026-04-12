@@ -1,3 +1,6 @@
+"
+I am a probability distribution of special theoretical importance. I have two parameters: a mean value and a standard deviation. Mean is the average value that numbers sampled from me will take. Standard deviation describes how far from the mean the values will tend to spread.
+"
 Class {
 	#name : 'NormalDistribution',
 	#superclass : 'Object',

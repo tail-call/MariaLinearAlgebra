@@ -1,3 +1,6 @@
+"
+I hold examples for every class that would have too few examples to warrant its own examples class. It's kind of lazy, I know.
+"
 Class {
 	#name : 'MlaExamples',
 	#superclass : 'Object',

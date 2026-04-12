@@ -1,3 +1,6 @@
+"
+I am the baseline class for Metacello.
+"
 Class {
 	#name : 'BaselineOfMariaLinearAlgebra',
 	#superclass : 'BaselineOf',

@@ -1,3 +1,6 @@
+"
+I hold examples for the `Matrix` class.
+"
 Class {
 	#name : 'MatrixExamples',
 	#superclass : 'Object',

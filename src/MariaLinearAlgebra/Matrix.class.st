@@ -1,3 +1,6 @@
+"
+I am a linear homomorphism of vector spaces.
+"
 Class {
 	#name : 'Matrix',
 	#superclass : 'Object',

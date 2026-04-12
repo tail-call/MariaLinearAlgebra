@@ -1,3 +1,6 @@
+"
+I can compute the approximate values of numerical derivatives. I accept a block as a parameter and I behave like a block.
+"
 Class {
 	#name : 'NumericalDerivative',
 	#superclass : 'Object',

@@ -1,3 +1,6 @@
+"
+I allow looking at the arbitrary objects through the 2D shape using a pair of blocks. I am useful for creating 2D-array-like structures.
+"
 Class {
 	#name : 'Lens2D',
 	#superclass : 'Object',
