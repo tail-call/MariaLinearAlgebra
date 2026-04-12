@@ -15,9 +15,12 @@ the determinants and inverses, and for solving systems of linear equations
 - Query the probability density function
 - Sample from the distribution using the Box-Muller transform
 - Estimate log-likelihood of a sample
-## NumericalDerivative
+## Optimization
 
-Uses Richardson extrapolation for, um, increased accuracy
+These allow you to perform very basic maximum likelihood estimation:
+
+- `NumericalDerivative`: uses Richardson extrapolation for, um, increased accuracy
+- `SecantMethod`: has to be stepped manually, like you know, a moldable algorithm, to give you a feeling how 
 ## Loading the package
 
 1. Download a Glamorous Toolkit release from here: https://github.com/feenkcom/gtoolkit/releases
