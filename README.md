@@ -20,7 +20,7 @@ the determinants and inverses, and for solving systems of linear equations
 These allow you to perform very basic maximum likelihood estimation:
 
 - `NumericalDerivative`: uses Richardson extrapolation for, um, increased accuracy
-- `SecantMethod`: has to be stepped manually, like you know, a moldable algorithm, to give you a feeling how 
+- `SecantMethod`: finds roots of a function. When applied on `NumericalDerivative`, can be used for optimization
 ## Loading the package
 
 1. Download a Glamorous Toolkit release from here: https://github.com/feenkcom/gtoolkit/releases

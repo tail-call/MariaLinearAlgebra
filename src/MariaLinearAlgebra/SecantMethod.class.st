@@ -4,7 +4,10 @@ Class {
 	#instVars : [
 		'x0',
 		'x1',
-		'block'
+		'block',
+		'tolerance',
+		'maxIterations',
+		'stepsTaken'
 	],
 	#category : 'MariaLinearAlgebra',
 	#package : 'MariaLinearAlgebra'
@@ -28,6 +31,13 @@ SecantMethod class >> solveFor: der x0: x0 x1: x1 [
 		/
 		((der value: x1) - (der value: x0))
 	)
+]
+
+{ #category : 'as yet unclassified' }
+SecantMethod >> initialize [
+	tolerance := 1e-10.
+	maxIterations := 100.
+	stepsTaken := 0.
 ]
 
 { #category : 'as yet unclassified' }
@@ -55,18 +65,54 @@ SecantMethod >> solution [
 	^ x1
 ]
 
+{ #category : 'as yet unclassified' }
+SecantMethod >> solve [
+	| iterations |
+	iterations := 0.
+
+	[ ((block value: x1) abs) > tolerance ] whileTrue: [
+		iterations >= maxIterations ifTrue: [
+			^ #tooManyIterations
+		].
+
+		(self step) = #cannotStep ifTrue: [
+			^ x1
+		].
+		
+		(x1 isInfinite or: [ x1 isNaN ]) ifTrue: [
+			^ #divergence
+		].
+
+		iterations := iterations + 1.
+	].
+
+	^ x1
+]
+
 { #category : 'accessing' }
 SecantMethod >> step [
-	| x2 |
+	| x2 y1 y0 |
 	x0 = x1 ifTrue: [
-		^ self
+		^ #cannotStep
 	].
+	
+	y0 := block value: x0.
+	y1 := block value: x1.
+	
+	y1 = y0 ifTrue: [
+		^ #cannotStep
+	].
+	
 	x2 := x1 - (
-		((block value: x1) * (x1 - x0))
+		(y1 * (x1 - x0))
 		/
-		((block value: x1) - (block value: x0))
+		(y1 - y0)
 	).
+	
 	x0 := x1.
 	x1 := x2.
+	
+	stepsTaken := stepsTaken + 1.
+	
 	^ self
 ]
