@@ -6,6 +6,8 @@ This package is where I teach myself:
 - Smalltalk packages using the Glamorous Toolkit system
 - Linear algebra, calculus, and statistics (so the name of the package is misleading but we'll fix that *eventually*)
 
+This is not a general-purpose scientific computing library for Smalltalk, if you're looking for that — try [PolyMath](https://github.com/PolyMathOrg/PolyMath). This package focuses on clean unoptimized implementation of various mathematical methods for educational purposes
+
 Below is the description of what's inside
 ## Linear Algebra
 
