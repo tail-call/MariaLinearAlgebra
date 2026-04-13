@@ -15,6 +15,7 @@ Below is the description of what's inside
 - `ColumnVector` for faster special case L2 norm (`spectralNorm`), also has a dot product
 - `Lens2D` internal storage for matrices for fast row swaps/transposition
 - `LUDecomposition` class for computing the determinants and inverses, and for solving systems of linear equations
+- `QRDecomposition` class for computing the Gram-Schmidt process that can be used to compute the QR decomposition
 ## NormalDistribution
 - Query the probability density function
 - Sample from the distribution using the Box-Muller transform
