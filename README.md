@@ -11,8 +11,10 @@ This is not a general-purpose scientific computing library for Smalltalk, if you
 Below is the description of what's inside
 ## Linear Algebra
 
-`Matrix` class, a `Lens2D` internal storage for matrices for fast row swaps/transpositions, and a `LUDecomposition` class for computing
-the determinants and inverses, and for solving systems of linear equations
+- `Matrix` class: additions, multiplications, transpositions
+- `ColumnVector` for faster special case L2 norm (`spectralNorm`)
+- `Lens2D` internal storage for matrices for fast row swaps/transposition
+- `LUDecomposition` class for computing the determinants and inverses, and for solving systems of linear equations
 ## NormalDistribution
 - Query the probability density function
 - Sample from the distribution using the Box-Muller transform

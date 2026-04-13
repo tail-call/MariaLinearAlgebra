@@ -63,7 +63,11 @@ Matrix class >> fromArrays: rowsArray [
 { #category : 'initialization' }
 Matrix class >> rows: r columns: c [
 	| matrix |
-	matrix := self new.
+	c = 1 ifTrue: [
+		matrix := ColumnVector new.
+	] ifFalse: [
+		matrix := self new.
+	].
 	matrix recreateWithRows: r columns: c.
 	^ matrix.
 ]
