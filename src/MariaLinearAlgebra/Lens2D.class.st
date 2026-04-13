@@ -40,7 +40,7 @@ Lens2D >> atRow: i column: j [
 { #category : 'as yet unclassified' }
 Lens2D >> atRow: i column: j put: value [
 	self validateRow: i column: j.
-	writeBlock value: i value: j value: value.
+	writeBlock value: i value: j value: (value asFloat).
 ]
 
 { #category : 'as yet unclassified' }

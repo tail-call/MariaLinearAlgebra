@@ -280,7 +280,7 @@ Matrix >> recreateWithRows: r columns: c [
 	| internalArray |
 	height := r.
 	width := c.
-	internalArray := Float32Array new: r * c.
+	internalArray := Float64Array new: r * c.
 	accessor := Lens2D
 		lookingIntoFlat: internalArray
 		rows: height
