@@ -185,6 +185,21 @@ Matrix >> collectElementWise: block against: aMatrix [
 ]
 
 { #category : 'as yet unclassified' }
+Matrix >> columns [
+	^ (1 to: width) collect: [ :i |
+		| aVector |
+		aVector := ColumnVector rows: height.
+		1 to: height do: [ :j |
+			aVector atRow: j column: 1 put: (
+				self atRow: j column: i
+			)
+		].
+		aVector
+	]
+		
+]
+
+{ #category : 'as yet unclassified' }
 Matrix >> determinant [
 	^ (LUDecomposition decompose: self) determinant
 ]
@@ -263,8 +278,10 @@ Matrix >> recreateWithRows: r columns: c [
 
 { #category : 'accessing' }
 Matrix >> rows [
-	| rowItems |
+	"XXX Would be cool if this returned an array of RowVectors
+	 but we don't have them yet"
 	^ (1 to: height) collect: [ :i |
+		| rowItems |
 		rowItems := Float32Array new: width.
 		1 to: width do: [ :j |
 			rowItems at: j put: (self atRow: i column: j)

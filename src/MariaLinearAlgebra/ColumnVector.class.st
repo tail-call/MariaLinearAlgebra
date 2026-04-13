@@ -11,9 +11,20 @@ ColumnVector class >> fromArray: anArray [
 ]
 
 { #category : 'as yet unclassified' }
+ColumnVector class >> rows: h [
+	^ self rows: h columns: 1
+]
+
+{ #category : 'as yet unclassified' }
+ColumnVector >> columns [
+	"Specialization of Matrix's columns"
+	^ { self }
+]
+
+{ #category : 'as yet unclassified' }
 ColumnVector >> spectralNorm [
-	^ ((1 to: height) inject: 0 into: [ :acc :i |
-		(self atRow: i column: 1) ** 2 + acc
+	^ ((1 to: height) inject: 0 into: [ :acc :j |
+		(self atRow: j column: 1) ** 2 + acc
 	]) sqrt
 	
 ]
