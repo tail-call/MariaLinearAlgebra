@@ -16,6 +16,12 @@ ColumnVector class >> rows: h [
 ]
 
 { #category : 'as yet unclassified' }
+ColumnVector >> *! aColumnVector [
+	"Scalar product of two column vectors"
+	^ ((self transposed * aColumnVector) atRow: 1 column: 1)
+]
+
+{ #category : 'as yet unclassified' }
 ColumnVector >> columns [
 	"Specialization of Matrix's columns"
 	^ { self }

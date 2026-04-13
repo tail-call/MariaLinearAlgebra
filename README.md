@@ -11,8 +11,8 @@ This is not a general-purpose scientific computing library for Smalltalk, if you
 Below is the description of what's inside
 ## Linear Algebra
 
-- `Matrix` class: additions, multiplications, transpositions
-- `ColumnVector` for faster special case L2 norm (`spectralNorm`)
+- `Matrix` class: additions, multiplications, transpositions; multiply by scalar, divide by scalar
+- `ColumnVector` for faster special case L2 norm (`spectralNorm`), also has a dot product
 - `Lens2D` internal storage for matrices for fast row swaps/transposition
 - `LUDecomposition` class for computing the determinants and inverses, and for solving systems of linear equations
 ## NormalDistribution

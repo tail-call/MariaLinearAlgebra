@@ -104,6 +104,12 @@ Matrix >> * aMatrix [
 	^ newMatrix
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix >> *@ aNumber [
+	"Multiply by a scalar"
+	^ self collect: [ :x | x * aNumber ]
+]
+
 { #category : 'operators' }
 Matrix >> + aMatrix [
 	^ self collectElementWise: [ :a :b | a + b ] against: aMatrix
@@ -112,6 +118,12 @@ Matrix >> + aMatrix [
 { #category : 'operators' }
 Matrix >> - aMatrix [
 	^ self collectElementWise: [ :a :b | a - b ] against: aMatrix
+]
+
+{ #category : 'as yet unclassified' }
+Matrix >> /@ aNumber [
+	"Divide by a scalar"
+	^ self collect: [ :x | x / aNumber ]
 ]
 
 { #category : 'accessing' }
