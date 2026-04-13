@@ -60,6 +60,32 @@ Matrix class >> fromArrays: rowsArray [
 	^ newMatrix
 ]
 
+{ #category : 'as yet unclassified' }
+Matrix class >> fromColumnVectors: anArray [
+	| newMatrix height width aVector |
+	height := anArray first height.
+	width := anArray size.
+
+	self assert: (
+		anArray allSatisfy: [ :aVector |
+			(aVector width = 1) and: [ aVector height = height ]
+		]
+	).
+
+	newMatrix := self rows: height columns: width.
+	
+	1 to: width do: [ :j |
+		aVector := anArray at: j.
+		1 to: height do: [ :i |
+			newMatrix atRow: i column: j put: (
+				aVector atRow: i column: 1
+			)
+		].
+	].
+
+	^ newMatrix
+]
+
 { #category : 'initialization' }
 Matrix class >> rows: r columns: c [
 	| matrix |
@@ -150,7 +176,7 @@ Matrix >> atRow: i column: j put: float [
 	accessor atRow: i column: j put: float.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'updating' }
 Matrix >> atRow: i column: j updateBy: block [
 	| currentValue |
 	currentValue := self atRow: i column: j.
@@ -160,7 +186,7 @@ Matrix >> atRow: i column: j updateBy: block [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mapping' }
 Matrix >> collect: block [
 	| newMatrix value |
 	newMatrix := Matrix rows: height columns: width.
@@ -174,7 +200,7 @@ Matrix >> collect: block [
 	^ newMatrix.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mapping' }
 Matrix >> collect: block against: aMatrix [
 ]
 
@@ -196,7 +222,7 @@ Matrix >> collectElementWise: block against: aMatrix [
 	^ newMatrix
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Matrix >> columns [
 	^ (1 to: width) collect: [ :i |
 		| aVector |

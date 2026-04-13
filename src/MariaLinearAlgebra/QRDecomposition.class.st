@@ -44,6 +44,30 @@ QRDecomposition >> orthogonalBasis [
 ]
 
 { #category : 'as yet unclassified' }
+QRDecomposition >> q [
+	^ Matrix fromColumnVectors: orthogonalBasis.
+]
+
+{ #category : 'accessing' }
+QRDecomposition >> r [
+	| columns size rMatrix |
+	columns := originalMatrix columns.
+	size := columns size.
+	
+	rMatrix := Matrix rows: size columns: size.
+	
+	1 to: size do: [ :i |
+		i to: size do: [ :j |
+			rMatrix atRow: i column: j put: (
+				(columns at: j) *! (orthogonalBasis at: i)
+			)
+		].
+	].
+	
+	^ rMatrix
+]
+
+{ #category : 'as yet unclassified' }
 QRDecomposition >> setOriginalMatrix: aMatrix [
 	originalMatrix := aMatrix.
 ]
