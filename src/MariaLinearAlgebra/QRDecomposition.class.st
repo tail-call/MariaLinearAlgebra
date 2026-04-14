@@ -39,6 +39,11 @@ QRDecomposition class >> decompose: aMatrix [
 ]
 
 { #category : 'as yet unclassified' }
+QRDecomposition >> originalMatrix [
+	^ originalMatrix
+]
+
+{ #category : 'as yet unclassified' }
 QRDecomposition >> orthogonalBasis [
 	^ orthogonalBasis
 ]
