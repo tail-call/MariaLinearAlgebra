@@ -239,7 +239,27 @@ Matrix >> columns [
 
 { #category : 'as yet unclassified' }
 Matrix >> determinant [
+	(width = 2 and: [ height = 2 ]) ifTrue: [
+		^ (
+			(self atRow: 1 column:1) * (self atRow: 2 column:2)
+		) - (
+			(self atRow: 1 column:2) * (self atRow: 2 column:1)
+		)
+	].
 	^ (LUDecomposition decompose: self) determinant
+]
+
+{ #category : 'accessing' }
+Matrix >> eigenvalues [
+	(width = 2 and: [ height = 2 ]) ifTrue: [
+		| tr det drt |
+		tr := self matrixTrace.
+		det := self determinant.
+		drt := (tr ** 2 - (4 * det)) sqrt.
+		^ { (tr + drt) / 2 . (tr - drt) / 2 }
+	] ifFalse: [
+		NotYetImplemented signal: 'Eigenvalues for matrices larger than 2x2 cannot be computed yet'
+	]
 ]
 
 { #category : 'as yet unclassified' }
@@ -299,6 +319,15 @@ Matrix >> materialize [
 		newMatrix atRow: i column: j put: each
 	].
 	^ newMatrix
+]
+
+{ #category : 'accessing' }
+Matrix >> matrixTrace [
+	"Note that #trace method is doing something else so we do not override it"
+	self assert: width equals: height.
+	^ (1 to: width) inject: 0 into: [ :acc :each |
+		acc + (self atRow: each column: each)
+	]
 ]
 
 { #category : 'initialization' }
