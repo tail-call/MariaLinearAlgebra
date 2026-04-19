@@ -57,7 +57,7 @@ AlignSubtractModulus class >> primeNumbersUpTo: a [
 	| n pCount sel2 |
 	n := 1.
 	pCount := 0.
-	sel2 := 0.
+	sel2 := false.
 	^ Generator on: [ :g |
 		[ n < a ] whileTrue: [
 			(n = 2) ifTrue: [
@@ -74,9 +74,9 @@ AlignSubtractModulus class >> primeNumbersUpTo: a [
 							break value.
 						] ifFalse: [
 							| s |
-							(sel2 = 0) ifTrue: [
+							sel2 ifTrue: [
 								s := self integer: n mod: 2.
-								sel2 := 1.
+								sel2 := true.
 							] ifFalse: [
 								s := self integer: n mod: i.
 								(s = 0) ifTrue: [
