@@ -74,10 +74,10 @@ AlignSubtractModulus class >> primeNumbersUpTo: a [
 							break value.
 						] ifFalse: [
 							| s |
-							sel2 ifTrue: [
+							sel2 ifFalse: [
 								s := self integer: n mod: 2.
 								sel2 := true.
-							] ifFalse: [
+							] ifTrue: [
 								s := self integer: n mod: i.
 								(s = 0) ifTrue: [
 									break value.
