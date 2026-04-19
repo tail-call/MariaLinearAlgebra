@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AlignSubtractModulus class >> a: a b: b [
+AlignSubtractModulus class >> integer: a mod: b [
 	| dividend divisor shift state n |
 	state := #align. "#align | #subtract"
 	dividend := a.
@@ -43,11 +43,53 @@ AlignSubtractModulus class >> a: a b: b [
 			(dividend >= divisor) ifTrue: [
 				dividend := dividend - divisor.
 			].
-			divisor := divisor bitShift: -1.
-			shift := shift - 1.
-			((dividend < divisor) or: [shift = 0 or: [shift >= n]]) ifTrue: [
-				^ dividend
-			].
+	    (shift = 0) ifTrue: [ ^ dividend ]. 
+	    divisor := divisor bitShift: -1.
+	    shift := shift - 1.
+	    (shift >= n) ifTrue: [ ^ dividend ].
 		].
 	]
+]
+
+{ #category : 'as yet unclassified' }
+AlignSubtractModulus class >> primeNumbersUpTo: a [
+	"Algorithm 2 from the paper referenced in the comment."
+	| n pCount sel2 |
+	n := 1.
+	pCount := 0.
+	sel2 := 0.
+	^ Generator on: [ :g |
+		[ n < a ] whileTrue: [
+			(n = 2) ifTrue: [
+				g yield: n.
+				pCount := pCount + 1.
+			] ifFalse: [
+				| i |
+				i := 3.
+				[ :break |
+					[ i <= n ] whileTrue: [
+						(i = n) ifTrue: [
+							g yield: n.
+							pCount := pCount + 1.
+							break value.
+						] ifFalse: [
+							| s |
+							(sel2 = 0) ifTrue: [
+								s := self integer: n mod: 2.
+								sel2 := 1.
+							] ifFalse: [
+								s := self integer: n mod: i.
+								(s = 0) ifTrue: [
+									break value.
+								].
+							].
+						].
+						i := i + 2.
+					].
+				] valueWithExit.
+			].
+			n := n + 1.
+		]
+	].
+	
 ]
