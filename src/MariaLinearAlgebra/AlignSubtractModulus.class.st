@@ -14,12 +14,11 @@ Class {
 
 { #category : 'as yet unclassified' }
 AlignSubtractModulus class >> a: a b: b [
-	| dividend divisor shift done state n |
+	| dividend divisor shift state n |
 	state := #align. "#align | #subtract"
 	dividend := a.
 	divisor := b.
 	shift := 0.
-	done := false.
 
 	n := 63. "NB: SmallIntegers are 63-bit values on 64-bit machines.
 	          A better approach would be to detect size of SmallInteger."
