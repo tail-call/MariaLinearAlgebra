@@ -26,6 +26,10 @@ These allow you to perform very basic maximum likelihood estimation:
 
 - `NumericalDerivative`: uses Richardson extrapolation for, um, increased accuracy
 - `SecantMethod`: finds roots of a function. When applied on `NumericalDerivative`, can be used for optimization
+
+## AlignSubtractModulus
+
+This class implements a modulus operation without dividing anything. This doesn't fit very neatly into the core theme of the package but I was curious about how modulus could be implemented in hardware efficiently and now it's here.
 ## Loading the package
 
 1. Download a Glamorous Toolkit release from here: https://github.com/feenkcom/gtoolkit/releases
